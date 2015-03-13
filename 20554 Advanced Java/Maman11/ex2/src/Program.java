@@ -52,7 +52,7 @@ public class Program
             if (dialogResult == JOptionPane.CANCEL_OPTION)
             {
                 int startOverResult = JOptionPane.showConfirmDialog(null, "Would you like to start over?", null, JOptionPane.YES_NO_OPTION);
-                shouldStartOver = startOverResult == JOptionPane.YES_OPTION;
+                shouldStartOver = (startOverResult == JOptionPane.YES_OPTION);
             }
 
         }
