@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Maman11/11.ex1/11.ex1.iml" filepath="$PROJECT_DIR$/Maman11/11.ex1/11.ex1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Maman11/11.ex2/11.ex2.iml" filepath="$PROJECT_DIR$/Maman11/11.ex2/11.ex2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Maman12/12.ex1/12.ex1.iml" filepath="$PROJECT_DIR$/Maman12/12.ex1/12.ex1.iml" />
       <module fileurl="file://$PROJECT_DIR$/20554 Advanced Java.iml" filepath="$PROJECT_DIR$/20554 Advanced Java.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman11/Maman11.iml" filepath="$PROJECT_DIR$/Maman11/Maman11.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Maman11/ex1/ex1.iml" filepath="$PROJECT_DIR$/Maman11/ex1/ex1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Maman11/ex2/ex2.iml" filepath="$PROJECT_DIR$/Maman11/ex2/ex2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Maman12/Maman12.iml" filepath="$PROJECT_DIR$/Maman12/Maman12.iml" />
     </modules>
   </component>
 </project>
