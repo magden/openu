@@ -11,34 +11,12 @@ public class Program
             shouldStartOver = false;
 
             //Input from the user
-            String inputWidth, inputHeight;
-            do
-            {
-                inputWidth = JOptionPane.showInputDialog("Enter matrix width");
-            }
-            while (inputWidth == null);
-
-            do
-            {
-                inputHeight = JOptionPane.showInputDialog("Enter matrix height");
-            }
-            while (inputHeight == null);
-
-            int width = Integer.parseInt(inputWidth);
-            int height = Integer.parseInt(inputHeight);
+            int width = getIntFromUser("Enter matrix width");
+            int height = getIntFromUser("Enter matrix height");
 
             //init game of life
             GameOfLife game = new GameOfLife(height, width);
-            Random randomizer = new Random();
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    boolean randomBool = randomizer.nextBoolean();
-                    game.setCellState(i, j, randomBool);
-                }
-            }
+            randomizeCells(game, height, width);
 
             //show and handle results
             int dialogResult = JOptionPane.showConfirmDialog(null, game);
@@ -57,5 +35,31 @@ public class Program
 
         }
         while (shouldStartOver);
+    }
+
+    private static void randomizeCells(GameOfLife game, int height, int width)
+    {
+        Random randomizer = new Random();
+
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                boolean randomBool = randomizer.nextBoolean();
+                game.setCellState(i, j, randomBool);
+            }
+        }
+    }
+
+    private static int getIntFromUser(String message)
+    {
+        String input;
+        do
+        {
+            input = JOptionPane.showInputDialog(message);
+        }
+        while (input == null);
+
+        return Integer.parseInt(input);
     }
 }
