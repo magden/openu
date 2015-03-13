@@ -4,7 +4,6 @@
 public class GameOfLife
 {
     private Boolean[][] currentGen;
-    private Boolean[][] nextGen;
 
     public GameOfLife(int height, int width)
     {
@@ -34,7 +33,7 @@ public class GameOfLife
 
     public void nextGeneration()
     {
-        nextGen = currentGen.clone();
+        Boolean[][] nextGen = currentGen.clone();
 
         for (int i = 0; i < currentGen.length; i++)
         {
