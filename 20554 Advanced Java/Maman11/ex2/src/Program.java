@@ -5,7 +5,7 @@ public class Program
 {
     public static void main(String[] args)
     {
-        Boolean shouldStartOver;
+        boolean shouldStartOver;
         do
         {
             shouldStartOver = false;
@@ -35,7 +35,7 @@ public class Program
             {
                 for (int j = 0; j < width; j++)
                 {
-                    Boolean randomBool = randomizer.nextBoolean();
+                    boolean randomBool = randomizer.nextBoolean();
                     game.setCellState(i, j, randomBool);
                 }
             }

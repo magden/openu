@@ -3,11 +3,11 @@
  */
 public class GameOfLife
 {
-    private Boolean[][] currentGen;
+    private boolean[][] currentGen;
 
     public GameOfLife(int height, int width)
     {
-        currentGen = new Boolean[height][width];
+        currentGen = new boolean[height][width];
         for (int i = 0; i < currentGen.length; i++)
         {
             for (int j = 0; j < currentGen[i].length; j++)
@@ -17,7 +17,7 @@ public class GameOfLife
         }
     }
 
-    public void setCellState(int row, int col, Boolean state)
+    public void setCellState(int row, int col, boolean state)
     {
         if (isValidCell(col, row))
         {
@@ -25,7 +25,7 @@ public class GameOfLife
         }
     }
 
-    private Boolean isValidCell(int row, int col)
+    private boolean isValidCell(int row, int col)
     {
         return row >= 0 && row < currentGen.length &&
                 col >= 0 && col < currentGen[row].length;
@@ -33,7 +33,7 @@ public class GameOfLife
 
     public void nextGeneration()
     {
-        Boolean[][] nextGen = currentGen.clone();
+        boolean[][] nextGen = currentGen.clone();
 
         for (int i = 0; i < currentGen.length; i++)
         {
