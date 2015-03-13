@@ -1,18 +1,18 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Stas on 13/03/2015.
  */
 public class GuessingGame
 {
-    private final int NUMBER_OF_DIGITS = 4;
-    private final int NOT_FOUND = -1;
+    private static final int NUMBER_OF_DIGITS = 4;
+    private static final int NOT_FOUND = -1;
 
     private GuessState[][] gameState = new GuessState[NUMBER_OF_DIGITS][10];
     private int[] lastGuess;
     private int[] realAnswer = new int[NUMBER_OF_DIGITS];
     private int numberOfGuesses;
+    private boolean isConflict;
 
     public GuessingGame()
     {
@@ -22,6 +22,7 @@ public class GuessingGame
     public void newGame()
     {
         numberOfGuesses = 0;
+        isConflict = false;
         for (int i = 0; i < gameState.length; i++)
         {
             for (int j = 0; j < gameState[i].length; j++)
@@ -36,7 +37,7 @@ public class GuessingGame
         }
     }
 
-    public Boolean isValidHint(String hint)
+    public static boolean isValidHint(String hint)
     {
         if (hint == null || hint.length() != NUMBER_OF_DIGITS)
         {
@@ -57,6 +58,12 @@ public class GuessingGame
 
     public int[] guess()
     {
+        //CONFLICT MODE: user has tricked us with incorrect answers
+        if (isConflict)
+        {
+            return new int[]{0, 0, 0, 0};
+        }
+
         numberOfGuesses++;
 
         ArrayList<Integer> guesses = new ArrayList<Integer>();
@@ -69,6 +76,13 @@ public class GuessingGame
             else
             {
                 Integer guessDigit = getPossibleDigit(i, guesses);
+
+                if (guessDigit == NOT_FOUND)
+                {
+                    //CONFLICT MODE: user has tricked us with incorrect answers
+                    isConflict = true;
+                    return new int[]{0, 0, 0, 0};
+                }
                 guesses.add(guessDigit);
             }
         }
@@ -105,7 +119,7 @@ public class GuessingGame
         return answer;
     }
 
-    public Boolean isFinishGuessing()
+    public boolean isFinishGuessing()
     {
         for (int digit : realAnswer)
         {
@@ -120,9 +134,7 @@ public class GuessingGame
 
     private int getPossibleDigit(int position, ArrayList<Integer> guesses)
     {
-        int[] randomDigits = createRandomDigitArray();
-
-        for (int i : randomDigits)
+        for (int i = 0; i < 10; i++)
         {
             if (gameState[position][i] == GuessState.UNKNOWN && !guesses.contains(i))
             {
@@ -130,35 +142,13 @@ public class GuessingGame
             }
         }
 
-        return -1; // if we get here, the use is fooled us with incorrect hints
-    }
-
-    public int[] createRandomDigitArray()
-    {
-        int[] randomArray = new int[10];
-        for (int i = 0; i < 10; i++)
-        {
-            randomArray[i] = NOT_FOUND;
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            int random;
-            do
-            {
-                random = new Random().nextInt(10);
-            }
-            while (randomArray[random] != NOT_FOUND);
-            randomArray[random] = i;
-        }
-
-        return randomArray;
+        return NOT_FOUND; // if we get here, the use is fooled us with incorrect hints
     }
 
     public void applyHint(String hint)
     {
-        //invalid hint
-        if (!isValidHint(hint))
+        //invalid hint or conflict mode should do nothing
+        if (isConflict || !isValidHint(hint))
         {
             return;
         }
@@ -221,5 +211,10 @@ public class GuessingGame
         {
             gameState[i][digit] = GuessState.NOT_POSSIBLE;
         }
+    }
+
+    public boolean isConflict()
+    {
+        return isConflict;
     }
 }
