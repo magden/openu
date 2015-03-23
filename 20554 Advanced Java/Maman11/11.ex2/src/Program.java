@@ -58,7 +58,7 @@ public class Program
         {
             input = JOptionPane.showInputDialog(message);
         }
-        while (input == null);
+        while (input == null || input.length() == 0);
 
         return Integer.parseInt(input);
     }
