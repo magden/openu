@@ -25,4 +25,15 @@ public class MyOval extends MyBoundedShape
         }
         graphicsInstance.setColor(oldColor);
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof MyOval)
+        {
+            MyOval otherOval = (MyOval) obj;
+            return this.getWidth() == otherOval.getWidth() && this.getHeight() == otherOval.getHeight();
+        }
+        return false;
+    }
 }

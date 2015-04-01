@@ -19,6 +19,19 @@ public class MyLine extends MyShape
         graphicsInstance.setColor(oldColor);
     }
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof MyLine)
+        {
+            MyLine otherLine = (MyLine) obj;
+            double length1 = Math.pow(this.getEndX() - this.getStartX(), 2) + Math.pow(this.getEndY() - this.getStartY(), 2);
+            double length2 = Math.pow(otherLine.getEndX() - otherLine.getStartX(), 2) + Math.pow(otherLine.getEndY() - otherLine.getStartY(), 2);
+            return length1 == length2;
+        }
+        return false;
+    }
+
     public int getStartX()
     {
         return this.x1;

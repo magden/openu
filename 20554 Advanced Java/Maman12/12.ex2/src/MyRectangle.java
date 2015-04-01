@@ -25,4 +25,15 @@ public class MyRectangle extends MyBoundedShape
         }
         graphicsInstance.setColor(oldColor);
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof MyRectangle)
+        {
+            MyRectangle otherRect = (MyRectangle) obj;
+            return this.getWidth() == otherRect.getWidth() && this.getHeight() == otherRect.getHeight();
+        }
+        return false;
+    }
 }
