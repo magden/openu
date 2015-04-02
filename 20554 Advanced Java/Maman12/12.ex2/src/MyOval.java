@@ -17,7 +17,7 @@ public class MyOval extends MyBoundedShape
         graphicsInstance.setColor(this.getShapeColor());
         if (this.isFull)
         {
-            graphicsInstance.drawOval(getOriginX(), getOriginY(), getWidth(), getHeight());
+            graphicsInstance.fillOval(getOriginX(), getOriginY(), getWidth(), getHeight());
         }
         else
         {

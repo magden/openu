@@ -10,13 +10,23 @@ public class Program
 {
     public static void main(String args[])
     {
+        //Shapes
         ArrayList<MyShape> shapes = createShapes();
         ArrayList<MyShape> clonedShapes = cloneShapes(shapes);
         changeShapes(clonedShapes);
 
+        //Panel
+        ArrayList<MyShape> allShapes = new ArrayList<MyShape>(shapes);
+        allShapes.addAll(clonedShapes);
+        ShapePanel panel = new ShapePanel(allShapes);
+
+        //JFrame
         JFrame window = new JFrame();
+        window.setTitle("Shapes ( ͡° \u035Cʖ ͡°)");
+        window.add(panel);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(400, 400);
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
 
@@ -30,7 +40,7 @@ public class Program
         MyRectangle rect1 = new MyRectangle(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.ORANGE, true);
         MyRectangle rect2 = new MyRectangle(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.BLACK, false);
         MyOval oval1 = new MyOval(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.PINK, true);
-        MyOval oval2 = new MyOval(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.GRAY, false);
+        MyOval oval2 = new MyOval(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.BLUE, false);
 
         shapes.add(line1);
         shapes.add(line2);
@@ -64,7 +74,7 @@ public class Program
         for (MyShape shape : shapesArray)
         {
             shape.setX1(shape.getX1() + 10);
-            shape.setX1(shape.getX1() + 10);
+            shape.setY1(shape.getY1() + 10);
 
             if (shape instanceof MyBoundedShape)
             {

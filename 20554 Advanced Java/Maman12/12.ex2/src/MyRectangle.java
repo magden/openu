@@ -17,7 +17,7 @@ public class MyRectangle extends MyBoundedShape
         graphicsInstance.setColor(this.getShapeColor());
         if (this.isFull)
         {
-            graphicsInstance.drawRect(getOriginX(), getOriginY(), getWidth(), getHeight());
+            graphicsInstance.fillRect(getOriginX(), getOriginY(), getWidth(), getHeight());
         }
         else
         {
