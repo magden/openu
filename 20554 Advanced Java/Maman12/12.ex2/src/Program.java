@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,18 +11,26 @@ public class Program
     public static void main(String args[])
     {
         ArrayList<MyShape> shapes = createShapes();
+        ArrayList<MyShape> clonedShapes = cloneShapes(shapes);
+        changeShapes(clonedShapes);
+
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(400, 400);
+        window.setVisible(true);
     }
 
     private static ArrayList<MyShape> createShapes()
     {
         ArrayList<MyShape> shapes = new ArrayList<MyShape>();
+        Random random = new Random();
 
-        MyLine line1 = new MyLine(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.RED);
-        MyLine line2 = new MyLine(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.GREEN);
-        MyRectangle rect1 = new MyRectangle(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.ORANGE, true);
-        MyRectangle rect2 = new MyRectangle(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.BLACK, false);
-        MyOval oval1 = new MyOval(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.PINK, true);
-        MyOval oval2 = new MyOval(randomInt(200), randomInt(200), randomInt(200), randomInt(200), Color.GRAY, false);
+        MyLine line1 = new MyLine(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.RED);
+        MyLine line2 = new MyLine(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.GREEN);
+        MyRectangle rect1 = new MyRectangle(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.ORANGE, true);
+        MyRectangle rect2 = new MyRectangle(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.BLACK, false);
+        MyOval oval1 = new MyOval(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.PINK, true);
+        MyOval oval2 = new MyOval(random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(200), Color.GRAY, false);
 
         shapes.add(line1);
         shapes.add(line2);
@@ -33,9 +42,35 @@ public class Program
         return shapes;
     }
 
-    public static int randomInt(int max)
+    private static ArrayList<MyShape> cloneShapes(ArrayList<MyShape> shapeArray)
     {
-        Random random = new Random();
-        return random.nextInt(max);
+        ArrayList<MyShape> cloned = new ArrayList<MyShape>();
+        for (MyShape shape : shapeArray)
+        {
+            try
+            {
+                cloned.add((MyShape) shape.clone());
+            }
+            catch (CloneNotSupportedException e)
+            {
+                System.out.println("something is wrong with the clone method :(");
+            }
+        }
+        return cloned;
+    }
+
+    private static void changeShapes(ArrayList<MyShape> shapesArray)
+    {
+        for (MyShape shape : shapesArray)
+        {
+            shape.setX1(shape.getX1() + 10);
+            shape.setX1(shape.getX1() + 10);
+
+            if (shape instanceof MyBoundedShape)
+            {
+                MyBoundedShape boundedShape = (MyBoundedShape) shape;
+                boundedShape.setIsFull(!boundedShape.isFull());
+            }
+        }
     }
 }

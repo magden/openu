@@ -64,4 +64,14 @@ public abstract class MyBoundedShape extends MyShape
     {
         this.y2 = newHeight;
     }
+
+    public boolean isFull()
+    {
+        return isFull;
+    }
+
+    public void setIsFull(boolean isFull)
+    {
+        this.isFull = isFull;
+    }
 }
