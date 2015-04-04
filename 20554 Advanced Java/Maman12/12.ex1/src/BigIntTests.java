@@ -10,9 +10,29 @@ public class BigIntTests
 {
     public static void allTests()
     {
+        CPrint.blue("============== isValid tests ==============\n");
         isValidTests();
+
+        CPrint.blue("============== toString tests ==============\n");
         toStringTests();
+
+        CPrint.blue("============== equals tests ==============\n");
+        equalsTests();
+
+        CPrint.blue("============== compareTo tests ==============\n");
+        compareToTests();
+
+        CPrint.blue("============== plus tests ==============\n");
         plusTests();
+
+        CPrint.blue("============== minus tests ==============\n");
+        minusTests();
+
+        CPrint.blue("============== multiply tests ==============\n");
+        multiplyTests();
+
+        CPrint.blue("============== divide tests ==============\n");
+        divideTests();
     }
 
     private static void isValidTests()
@@ -93,6 +113,9 @@ public class BigIntTests
 
         BigInt num7 = new BigInt("-929283998723929283998723879234784932894239824328943723767842358461971000099999988879234784932894239824328943723767842358461971000099999988");
         assertEquals(num7.toString(), "-929283998723929283998723879234784932894239824328943723767842358461971000099999988879234784932894239824328943723767842358461971000099999988", "toString test 7");
+
+        BigInt num8 = new BigInt("-0000000000000");
+        assertEquals(num8.toString(), "0", "toString test 8");
     }
 
     private static void plusTests()
@@ -106,16 +129,38 @@ public class BigIntTests
         plusTest("198889", "-999", "197890", "plus test 7");
         plusTest("-100", "-220", "-330", "plus test 8");
         plusTest("100", "-9990", "-0", "plus test 9");
-        plusTest("0", "0", "0", "plus test 10");
+        plusTest("-8744443433434334432211100000000000000000000000000090000", "+8744443433434334432211100000000000000000000000000090000", "0", "plus test 10");
 
         //RANDOM tests
         Random rnd = new Random();
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 10; i++)
         {
             long rnd1 = rnd.nextLong();
             long rnd2 = rnd.nextLong();
             plusTest("" + rnd1, "" + rnd2, "" + (rnd1 + rnd2), "random plus test #" + i);
         }
+    }
+
+    private static void minusTests()
+    {
+        //RANDOM tests
+        Random rnd = new Random();
+        for (int i = 0; i < 10; i++)
+        {
+            long rnd1 = rnd.nextLong();
+            long rnd2 = rnd.nextLong();
+            minusTest("" + rnd1, "" + rnd2, "" + (rnd1 - rnd2), "random minus test #" + i);
+        }
+    }
+
+    private static void multiplyTests()
+    {
+
+    }
+
+    private static void divideTests()
+    {
+
     }
 
     private static void plusTest(String num1, String num2, String expectedSum, String msg)
@@ -124,6 +169,72 @@ public class BigIntTests
         BigInt bigNum2 = new BigInt(num2);
         BigInt expectedBigSum = new BigInt(expectedSum);
         assertEquals(bigNum1.plus(bigNum2).toString(), expectedBigSum.toString(), msg);
+    }
+
+    private static void minusTest(String num1, String num2, String expectedSum, String msg)
+    {
+        BigInt bigNum1 = new BigInt(num1);
+        BigInt bigNum2 = new BigInt(num2);
+        BigInt expectedBigSum = new BigInt(expectedSum);
+        assertEquals(bigNum1.minus(bigNum2).toString(), expectedBigSum.toString(), msg);
+    }
+
+    private static void multiplyTest(String num1, String num2, String expectedSum, String msg)
+    {
+        BigInt bigNum1 = new BigInt(num1);
+        BigInt bigNum2 = new BigInt(num2);
+        BigInt expectedBigSum = new BigInt(expectedSum);
+        assertEquals(bigNum1.multiply(bigNum2).toString(), expectedBigSum.toString(), msg);
+    }
+
+    private static void devideTest(String num1, String num2, String expectedSum, String msg)
+    {
+        BigInt bigNum1 = new BigInt(num1);
+        BigInt bigNum2 = new BigInt(num2);
+        BigInt expectedBigSum = new BigInt(expectedSum);
+        assertEquals(bigNum1.divide(bigNum2).toString(), expectedBigSum.toString(), msg);
+    }
+
+    private static void equalsTests()
+    {
+        assertEquals(new BigInt("123456789"), new BigInt("123456789"), "equals test 1");
+        assertEquals(new BigInt("-1113232131"), new BigInt("-1113232131"), "equals test 2");
+        assertEquals(new BigInt("0000000000000"), new BigInt("0"), "equals test 3");
+        assertEquals(new BigInt("+0000000"), new BigInt("-000"), "equals test 4");
+        assertEquals(new BigInt("+0014"), new BigInt("14"), "equals test 5");
+        assertNotEquals(new BigInt("1828289"), new BigInt("-1828289"), "equals test 6");
+        assertNotEquals(new BigInt("+18282894"), new BigInt("-18282894"), "equals test 7");
+        assertEquals(new BigInt("280012931883488490100891209129890091889280012931883488490100891209129890091889319877112231987711222800129318834884901008912091298900918893198771122"), new BigInt("28001293188348849010089120912989009188931987711222800129318834884901008912091298900918893198771122"), "equals test 8");
+        assertEquals(new BigInt("   +  9999999999    "), new BigInt("9999999999"), "equals test 9");
+        assertEquals(new BigInt("  - 4444  "), new BigInt("-0004444"), "equals test 10");
+        assertEquals(new BigInt("-992389239289383923289893298238923982398239823323211"), new BigInt("-992389239289383923289893298238923982398239823323211"), "equals test 11");
+        assertEquals(new BigInt("-00000001"), new BigInt("-1"), "equals test 12");
+        assertEquals(new BigInt("4"), new BigInt("4"), "equals test 13");
+        assertEquals(new BigInt("004"), new BigInt("04"), "equals test 14");
+        assertEquals(new BigInt("+030"), new BigInt("30"), "equals test 15");
+    }
+
+    private static void compareToTests()
+    {
+        assertEquals(new BigInt("0").compareTo(new BigInt("0")), 0, "equals test 1");
+        assertEquals(new BigInt("2234234324324324124141491914941491249").compareTo(new BigInt("2234234324324324124141491914941491248")), 1, "equals test 1");
+        assertEquals(new BigInt("1123112113209494538543845374537543999").compareTo(new BigInt("1123112113209494538543845374537544000")), -1, "equals test 2");
+        assertEquals(new BigInt("2332323232323245467654546576879654393").compareTo(new BigInt("2332323232323245467654546576879654393")), 0, "equals test 3");
+        assertEquals(new BigInt("-1000").compareTo(new BigInt("-1001")), 1, "equals test 4");
+        assertEquals(new BigInt("-1000").compareTo(new BigInt("-999")), -1, "equals test 5");
+        assertEquals(new BigInt("-99993").compareTo(new BigInt("-99993")), 0, "equals test 6");
+        assertEquals(new BigInt("0").compareTo(new BigInt("1")), -1, "equals test 7");
+        assertEquals(new BigInt("-1").compareTo(new BigInt("1")), -1, "equals test 8");
+        assertEquals(new BigInt("1").compareTo(new BigInt("-1")), 1, "equals test 9");
+        assertEquals(new BigInt("99").compareTo(new BigInt("100")), -1, "equals test 10");
+        assertEquals(new BigInt("100").compareTo(new BigInt("99")), 1, "equals test 11");
+        assertEquals(new BigInt("-999").compareTo(new BigInt("-1000")), 1, "equals test 12");
+        assertEquals(new BigInt("-3223323232323232").compareTo(new BigInt("0")), -1, "equals test 13");
+        assertEquals(new BigInt("0").compareTo(new BigInt("3232323233232")), -1, "equals test 14");
+        assertEquals(new BigInt("9999").compareTo(new BigInt("99999")), -1, "equals test 15");
+        assertEquals(new BigInt("09999").compareTo(new BigInt("99999")), -1, "equals test 16");
+        assertEquals(new BigInt("000000").compareTo(new BigInt("000")), 0, "equals test 17");
+        assertEquals(new BigInt("-0").compareTo(new BigInt("+0")), 0, "equals test 17");
     }
 
     public static void assertEquals(Object o1, Object o2, String desc)
@@ -137,6 +248,20 @@ public class BigIntTests
         {
             CPrint.red("[FAIL] ");
             CPrint.red(desc + "\t(" + o1 + " is not equals to " + o2 + ")\n");
+        }
+    }
+
+    public static void assertNotEquals(Object o1, Object o2, String desc)
+    {
+        if (o1.equals(o2))
+        {
+            CPrint.red("[FAIL] ");
+            CPrint.red(desc + "\t(" + o1 + " shouldn't be equals to " + o2 + ")\n");
+        }
+        else
+        {
+            CPrint.green("[PASS] ");
+            System.out.println(desc + "\t(" + o1 + " is not equals to " + o2 + ")");
         }
     }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Created by Stas on 13/03/2015.
@@ -6,15 +7,17 @@ import java.util.ArrayList;
 public class BigInt implements Comparable<BigInt>
 {
     private ArrayList<Byte> digitArray;
-    private boolean isNegative;
+    private boolean isNegative; //false for zeros
 
     public BigInt(String number)
     {
+        //check validity of the input string
         if (!isValidNumber(number))
         {
             throw new IllegalArgumentException("String '" + number + "' is not a valid number");
         }
 
+        //determine sign
         number = number.trim();
         if (number.charAt(0) == '-')
         {
@@ -26,8 +29,9 @@ public class BigInt implements Comparable<BigInt>
             isNegative = false;
             number = number.substring(1); //trim the first '+'
         }
+        number = number.trim();
 
-
+        //build the number
         digitArray = new ArrayList<Byte>();
         char[] digits = number.toCharArray();
 
@@ -43,14 +47,10 @@ public class BigInt implements Comparable<BigInt>
         return str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
     }
 
-    private void removeLeadingZeros()
-    {
-        //while (digitArray.)
-    }
-
     public BigInt plus(BigInt num)
     {
-        return new BigInt("0");
+        BigInt result = new BigInt("0");
+        return result;
     }
 
     public BigInt minus(BigInt num)
@@ -88,7 +88,17 @@ public class BigInt implements Comparable<BigInt>
     @Override
     public boolean equals(Object o)
     {
-        return super.equals(o);
+        if (o instanceof BigInt)
+        {
+            BigInt otherNum = (BigInt) o;
+            if (otherNum.isNegative != this.isNegative)
+            {
+                return false;
+            }
+
+
+        }
+        return false;
     }
 
     @Override
