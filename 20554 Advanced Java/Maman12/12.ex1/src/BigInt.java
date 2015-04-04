@@ -5,25 +5,52 @@ import java.util.ArrayList;
  */
 public class BigInt implements Comparable<BigInt>
 {
-    private ArrayList<Integer> digitArray;
+    private ArrayList<Byte> digitArray;
+    private boolean isNegative;
 
     public BigInt(String number)
     {
-        digitArray = new ArrayList<Integer>();
         if (!isValidNumber(number))
         {
             throw new IllegalArgumentException("String '" + number + "' is not a valid number");
         }
+
+        number = number.trim();
+        if (number.charAt(0) == '-')
+        {
+            isNegative = true;
+            number = number.substring(1); //trim the first '-'
+        }
+        else if (number.charAt(0) == '+')
+        {
+            isNegative = false;
+            number = number.substring(1); //trim the first '+'
+        }
+
+
+        digitArray = new ArrayList<Byte>();
+        char[] digits = number.toCharArray();
+
+        for (int i = digits.length - 1; i >= 0; i--)
+        {
+            byte digit = (byte) (digits[i] - '0');
+            digitArray.add(digit);
+        }
     }
 
-    public static boolean isValidNumber(String str)
+    private boolean isValidNumber(String str)
     {
-        return false;
+        return str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
+    }
+
+    private void removeLeadingZeros()
+    {
+        //while (digitArray.)
     }
 
     public BigInt plus(BigInt num)
     {
-        return null;
+        return new BigInt("0");
     }
 
     public BigInt minus(BigInt num)
@@ -44,7 +71,18 @@ public class BigInt implements Comparable<BigInt>
     @Override
     public String toString()
     {
-        return super.toString();
+        String result = "";
+        for (byte digit : digitArray)
+        {
+            result = digit + result;
+        }
+
+        if (isNegative)
+        {
+            result = "-" + result;
+        }
+
+        return result.toString();
     }
 
     @Override
