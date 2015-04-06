@@ -204,7 +204,7 @@ public class BigIntTests
         assertEquals(new BigInt("+0014"), new BigInt("14"), "equals test 5");
         assertNotEquals(new BigInt("1828289"), new BigInt("-1828289"), "equals test 6");
         assertNotEquals(new BigInt("+18282894"), new BigInt("-18282894"), "equals test 7");
-        assertEquals(new BigInt("280012931883488490100891209129890091889280012931883488490100891209129890091889319877112231987711222800129318834884901008912091298900918893198771122"), new BigInt("28001293188348849010089120912989009188931987711222800129318834884901008912091298900918893198771122"), "equals test 8");
+        assertEquals(new BigInt("280012931883488490100891209129890091889280012931883488490100891209129890091889319877112231987711222800129318834884901008912091298900918893198771122"), new BigInt("280012931883488490100891209129890091889280012931883488490100891209129890091889319877112231987711222800129318834884901008912091298900918893198771122"), "equals test 8");
         assertEquals(new BigInt("   +  9999999999    "), new BigInt("9999999999"), "equals test 9");
         assertEquals(new BigInt("  - 4444  "), new BigInt("-0004444"), "equals test 10");
         assertEquals(new BigInt("-992389239289383923289893298238923982398239823323211"), new BigInt("-992389239289383923289893298238923982398239823323211"), "equals test 11");
@@ -212,11 +212,14 @@ public class BigIntTests
         assertEquals(new BigInt("4"), new BigInt("4"), "equals test 13");
         assertEquals(new BigInt("004"), new BigInt("04"), "equals test 14");
         assertEquals(new BigInt("+030"), new BigInt("30"), "equals test 15");
+        assertNotEquals(new BigInt("546464"), new BigInt("646333"), "equals test 16");
+        assertNotEquals(new BigInt("-646322"), new BigInt("-646333"), "equals test 17");
+
     }
 
     private static void compareToTests()
     {
-        assertEquals(new BigInt("0").compareTo(new BigInt("0")), 0, "equals test 1");
+        assertEquals(new BigInt("0").compareTo(new BigInt("0")), 0, "equals test 0");
         assertEquals(new BigInt("2234234324324324124141491914941491249").compareTo(new BigInt("2234234324324324124141491914941491248")), 1, "equals test 1");
         assertEquals(new BigInt("1123112113209494538543845374537543999").compareTo(new BigInt("1123112113209494538543845374537544000")), -1, "equals test 2");
         assertEquals(new BigInt("2332323232323245467654546576879654393").compareTo(new BigInt("2332323232323245467654546576879654393")), 0, "equals test 3");
@@ -234,7 +237,7 @@ public class BigIntTests
         assertEquals(new BigInt("9999").compareTo(new BigInt("99999")), -1, "equals test 15");
         assertEquals(new BigInt("09999").compareTo(new BigInt("99999")), -1, "equals test 16");
         assertEquals(new BigInt("000000").compareTo(new BigInt("000")), 0, "equals test 17");
-        assertEquals(new BigInt("-0").compareTo(new BigInt("+0")), 0, "equals test 17");
+        assertEquals(new BigInt("-0").compareTo(new BigInt("+0")), 0, "equals test 18");
     }
 
     public static void assertEquals(Object o1, Object o2, String desc)
@@ -242,12 +245,12 @@ public class BigIntTests
         if (o1.equals(o2))
         {
             CPrint.green("[PASS] ");
-            System.out.println(desc + "\t(" + o1 + " is equals to " + o2 + ")");
+            System.out.println(desc + "\t(" + o1 + " is equal to " + o2 + ")");
         }
         else
         {
             CPrint.red("[FAIL] ");
-            CPrint.red(desc + "\t(" + o1 + " is not equals to " + o2 + ")\n");
+            CPrint.red(desc + "\t(" + o1 + " is not equal to " + o2 + ")\n");
         }
     }
 
@@ -256,12 +259,12 @@ public class BigIntTests
         if (o1.equals(o2))
         {
             CPrint.red("[FAIL] ");
-            CPrint.red(desc + "\t(" + o1 + " shouldn't be equals to " + o2 + ")\n");
+            CPrint.red(desc + "\t(" + o1 + " shouldn't be equal to " + o2 + ")\n");
         }
         else
         {
             CPrint.green("[PASS] ");
-            System.out.println(desc + "\t(" + o1 + " is not equals to " + o2 + ")");
+            System.out.println(desc + "\t(" + o1 + " is not equal to " + o2 + ")");
         }
     }
 

@@ -1,4 +1,7 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -31,6 +34,16 @@ public class BigInt implements Comparable<BigInt>
         }
         number = number.trim();
 
+        //remove leading zeros
+        number = removeLeadingZeros(number);
+
+        //correction for 0
+        if (number.isEmpty())
+        {
+            number = "0";
+            isNegative = false;
+        }
+
         //build the number
         digitArray = new ArrayList<Byte>();
         char[] digits = number.toCharArray();
@@ -40,6 +53,21 @@ public class BigInt implements Comparable<BigInt>
             byte digit = (byte) (digits[i] - '0');
             digitArray.add(digit);
         }
+    }
+
+    private String removeLeadingZeros(String number)
+    {
+        int zeroCount = 0;
+        while (zeroCount < number.length() && number.charAt(zeroCount) == '0')
+        {
+            zeroCount++;
+        }
+
+        if (zeroCount > 0)
+        {
+            number = number.substring(zeroCount);
+        }
+        return number;
     }
 
     private boolean isValidNumber(String str)
@@ -91,19 +119,54 @@ public class BigInt implements Comparable<BigInt>
         if (o instanceof BigInt)
         {
             BigInt otherNum = (BigInt) o;
-            if (otherNum.isNegative != this.isNegative)
-            {
-                return false;
-            }
-
+            return this.compareTo(otherNum) == 0;
 
         }
         return false;
     }
 
     @Override
-    public int compareTo(BigInt bigInt)
+    public int compareTo(BigInt otherNum)
     {
+        if (otherNum.isNegative && !this.isNegative)
+        {
+            return 1;
+        }
+        else if (!otherNum.isNegative && this.isNegative)
+        {
+            return -1;
+        }
+
+        boolean areNegative = otherNum.isNegative && this.isNegative;
+        int thisLength = this.digitArray.size();
+        int otherLength = otherNum.digitArray.size();
+
+        if (thisLength < otherLength)
+        {
+            return areNegative ? 1 : -1;
+        }
+        else if (thisLength > otherLength)
+        {
+            return areNegative ? -1 : 1;
+        }
+
+        ListIterator<Byte> thisIt = this.digitArray.listIterator(thisLength);
+        ListIterator<Byte> otherIt = otherNum.digitArray.listIterator(otherLength);
+
+        while (thisIt.hasPrevious() && otherIt.hasPrevious())
+        {
+            Byte thisDigit = thisIt.previous();
+            Byte otherDigit = otherIt.previous();
+            if (thisDigit < otherDigit)
+            {
+                return areNegative ? 1 : -1;
+            }
+            else if (thisDigit > otherDigit)
+            {
+                return areNegative ? -1 : 1;
+            }
+        }
+
         return 0;
     }
 }
