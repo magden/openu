@@ -9,7 +9,7 @@ import java.util.ListIterator;
  */
 public class BigInt implements Comparable<BigInt>
 {
-    private ArrayList<Byte> digitArray;
+    private ArrayList<Integer> digitArray;
     private boolean isNegative; //false for zeros
 
     public BigInt(String number)
@@ -34,40 +34,30 @@ public class BigInt implements Comparable<BigInt>
         }
         number = number.trim();
 
-        //remove leading zeros
-        number = removeLeadingZeros(number);
-
-        //correction for 0
-        if (number.isEmpty())
-        {
-            number = "0";
-            isNegative = false;
-        }
-
         //build the number
-        digitArray = new ArrayList<Byte>();
+        digitArray = new ArrayList<Integer>();
         char[] digits = number.toCharArray();
 
-        for (int i = digits.length - 1; i >= 0; i--)
+        boolean ignoreZeros = true;
+        for (int i = 0; i < digits.length; i++)
         {
-            byte digit = (byte) (digits[i] - '0');
+            int digit = digits[i] - '0';
+
+            if (digit == 0 && ignoreZeros)
+            {
+                continue;
+            }
+
             digitArray.add(digit);
-        }
-    }
-
-    private String removeLeadingZeros(String number)
-    {
-        int zeroCount = 0;
-        while (zeroCount < number.length() && number.charAt(zeroCount) == '0')
-        {
-            zeroCount++;
+            ignoreZeros = false;
         }
 
-        if (zeroCount > 0)
+        //correction for zero
+        if (digitArray.size() == 0)
         {
-            number = number.substring(zeroCount);
+            digitArray.add(0);
+            isNegative = false;
         }
-        return number;
     }
 
     private boolean isValidNumber(String str)
@@ -75,23 +65,65 @@ public class BigInt implements Comparable<BigInt>
         return str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
     }
 
-    public BigInt plus(BigInt num)
+    public BigInt plus(BigInt otherNum)
     {
-        BigInt result = new BigInt("0");
-        return result;
+        String result = "";
+
+        //Going backwards!
+        ListIterator<Integer> thisIt = this.digitArray.listIterator(this.digitArray.size());
+        ListIterator<Integer> otherIt = otherNum.digitArray.listIterator(otherNum.digitArray.size());
+
+        int extra = 0;
+        while (thisIt.hasPrevious() || otherIt.hasPrevious() || extra != 0)
+        {
+            int thisDigit = thisIt.hasPrevious() ? thisIt.previous() : 0;
+            int otherDigit = otherIt.hasPrevious() ? otherIt.previous() : 0;
+
+            //negative multiplier
+            if (this.isNegative)
+            {
+                thisDigit *= (-1);
+            }
+            if (otherNum.isNegative)
+            {
+                otherDigit *= (-1);
+            }
+
+            int resultDigit = thisDigit + otherDigit + extra;
+
+            extra = 0;
+
+            if (resultDigit > 10)
+            {
+                extra = resultDigit / 10;
+                resultDigit -= 10;
+            }
+            else if (resultDigit < 0)
+            {
+                resultDigit = 10 - resultDigit;
+                extra = resultDigit / 10;
+            }
+
+            result = resultDigit + result;
+        }
+
+        return new BigInt(result);
     }
 
-    public BigInt minus(BigInt num)
+    public BigInt minus(BigInt otherNum)
+    {
+        //Minus is just plus when the other operand has a different sign
+        BigInt numWithDifferentSign = new BigInt(otherNum.toString());
+        numWithDifferentSign.isNegative = !numWithDifferentSign.isNegative;
+        return this.plus(numWithDifferentSign);
+    }
+
+    public BigInt multiply(BigInt otherNum)
     {
         return null;
     }
 
-    public BigInt multiply(BigInt operand)
-    {
-        return null;
-    }
-
-    public BigInt divide(BigInt operand)
+    public BigInt divide(BigInt otherNum)
     {
         return null;
     }
@@ -99,15 +131,15 @@ public class BigInt implements Comparable<BigInt>
     @Override
     public String toString()
     {
-        String result = "";
-        for (byte digit : digitArray)
+        StringBuilder result = new StringBuilder();
+        for (int digit : digitArray)
         {
-            result = digit + result;
+            result.append(digit);
         }
 
         if (isNegative)
         {
-            result = "-" + result;
+            result.insert(0, "-");
         }
 
         return result.toString();
@@ -150,13 +182,13 @@ public class BigInt implements Comparable<BigInt>
             return areNegative ? -1 : 1;
         }
 
-        ListIterator<Byte> thisIt = this.digitArray.listIterator(thisLength);
-        ListIterator<Byte> otherIt = otherNum.digitArray.listIterator(otherLength);
+        ListIterator<Integer> thisIt = this.digitArray.listIterator();
+        ListIterator<Integer> otherIt = otherNum.digitArray.listIterator();
 
-        while (thisIt.hasPrevious() && otherIt.hasPrevious())
+        while (thisIt.hasNext() && otherIt.hasNext())
         {
-            Byte thisDigit = thisIt.previous();
-            Byte otherDigit = otherIt.previous();
+            Integer thisDigit = thisIt.next();
+            Integer otherDigit = otherIt.next();
             if (thisDigit < otherDigit)
             {
                 return areNegative ? 1 : -1;
