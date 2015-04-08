@@ -69,9 +69,43 @@ public class BigInt implements Comparable<BigInt>
     {
         String result = "";
 
+        BigInt bigger, smaller;
+        int compareResult = this.compareTo(otherNum);
+
+        if (compareResult != 0)
+        {
+            if (compareResult == 1)
+            {
+                bigger = otherNum;
+                smaller = this;
+            }
+            else if (compareResult == -1)
+            {
+                bigger = this;
+                smaller = otherNum;
+            }
+            else
+            {
+                bigger = smaller = null;
+            }
+
+            if (bigger.isNegative && !smaller.isNegative)
+            {
+                BigInt minusBigger = new BigInt(bigger.toString());
+                BigInt minusSmaller = new BigInt(smaller.toString());
+                bigger.isNegative = !bigger.isNegative;
+                smaller.isNegative = !smaller.isNegative;
+                BigInt answer = minusBigger.plus(minusSmaller);
+                answer.isNegative = !answer.isNegative;
+                return answer;
+            }
+        }
+
         //Going backwards!
         ListIterator<Integer> thisIt = this.digitArray.listIterator(this.digitArray.size());
         ListIterator<Integer> otherIt = otherNum.digitArray.listIterator(otherNum.digitArray.size());
+
+        Boolean bothNegative = this.isNegative && otherNum.isNegative;
 
         int extra = 0;
         while (thisIt.hasPrevious() || otherIt.hasPrevious() || extra != 0)
@@ -80,11 +114,11 @@ public class BigInt implements Comparable<BigInt>
             int otherDigit = otherIt.hasPrevious() ? otherIt.previous() : 0;
 
             //negative multiplier
-            if (this.isNegative)
+            if (this.isNegative && !bothNegative)
             {
                 thisDigit *= (-1);
             }
-            if (otherNum.isNegative)
+            if (otherNum.isNegative && !bothNegative)
             {
                 otherDigit *= (-1);
             }
@@ -93,20 +127,24 @@ public class BigInt implements Comparable<BigInt>
 
             extra = 0;
 
-            if (resultDigit > 10)
+            if (resultDigit >= 10)
             {
                 extra = resultDigit / 10;
                 resultDigit -= 10;
             }
             else if (resultDigit < 0)
             {
-                resultDigit = 10 - resultDigit;
-                extra = resultDigit / 10;
+                resultDigit += 10;
+                extra = -1;
             }
 
             result = resultDigit + result;
         }
 
+        if (bothNegative)
+        {
+            result = "-" + result;
+        }
         return new BigInt(result);
     }
 

@@ -135,20 +135,23 @@ public class BigIntTests
         Random rnd = new Random();
         for (int i = 0; i < 10; i++)
         {
-            long rnd1 = rnd.nextLong();
-            long rnd2 = rnd.nextLong();
+            long rnd1 = rnd.nextLong() / 10;
+            long rnd2 = rnd.nextLong() / 10;
             plusTest("" + rnd1, "" + rnd2, "" + (rnd1 + rnd2), "random plus test #" + i);
         }
     }
 
     private static void minusTests()
     {
+        minusTest("1000000", "1", "999999", "minus test 1");
+        minusTest("-1000000", "1", "-999999", "minus test 2");
+
         //RANDOM tests
         Random rnd = new Random();
         for (int i = 0; i < 10; i++)
         {
-            long rnd1 = rnd.nextLong();
-            long rnd2 = rnd.nextLong();
+            long rnd1 = rnd.nextLong() / 10;
+            long rnd2 = rnd.nextLong() / 10;
             minusTest("" + rnd1, "" + rnd2, "" + (rnd1 - rnd2), "random minus test #" + i);
         }
     }
