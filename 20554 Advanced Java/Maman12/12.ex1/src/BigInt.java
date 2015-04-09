@@ -60,6 +60,12 @@ public class BigInt implements Comparable<BigInt>
         }
     }
 
+    public BigInt(BigInt other)
+    {
+        this.digitArray = new ArrayList<Integer>(other.digitArray);
+        this.isNegative = other.isNegative;
+    }
+
     private boolean isValidNumber(String str)
     {
         return str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
@@ -70,31 +76,27 @@ public class BigInt implements Comparable<BigInt>
         String result = "";
 
         BigInt bigger, smaller;
-        int compareResult = this.compareTo(otherNum);
+        int compareResult = this.absolute().compareTo(otherNum.absolute());
 
         if (compareResult != 0)
         {
-            if (compareResult == 1)
+            if (compareResult == -1)
             {
                 bigger = otherNum;
                 smaller = this;
             }
-            else if (compareResult == -1)
+            else
             {
                 bigger = this;
                 smaller = otherNum;
             }
-            else
-            {
-                bigger = smaller = null;
-            }
 
             if (bigger.isNegative && !smaller.isNegative)
             {
-                BigInt minusBigger = new BigInt(bigger.toString());
-                BigInt minusSmaller = new BigInt(smaller.toString());
-                bigger.isNegative = !bigger.isNegative;
-                smaller.isNegative = !smaller.isNegative;
+                BigInt minusBigger = new BigInt(bigger);
+                BigInt minusSmaller = new BigInt(smaller);
+                minusBigger.isNegative = !bigger.isNegative;
+                minusSmaller.isNegative = !smaller.isNegative;
                 BigInt answer = minusBigger.plus(minusSmaller);
                 answer.isNegative = !answer.isNegative;
                 return answer;
@@ -151,7 +153,7 @@ public class BigInt implements Comparable<BigInt>
     public BigInt minus(BigInt otherNum)
     {
         //Minus is just plus when the other operand has a different sign
-        BigInt numWithDifferentSign = new BigInt(otherNum.toString());
+        BigInt numWithDifferentSign = new BigInt(otherNum);
         numWithDifferentSign.isNegative = !numWithDifferentSign.isNegative;
         return this.plus(numWithDifferentSign);
     }
@@ -164,6 +166,13 @@ public class BigInt implements Comparable<BigInt>
     public BigInt divide(BigInt otherNum)
     {
         return null;
+    }
+
+    public BigInt absolute()
+    {
+        BigInt absolute = new BigInt(this);
+        absolute.isNegative = false;
+        return absolute;
     }
 
     @Override

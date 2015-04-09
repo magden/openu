@@ -144,7 +144,7 @@ public class BigIntTests
     private static void minusTests()
     {
         minusTest("1000000", "1", "999999", "minus test 1");
-        minusTest("-1000000", "1", "-999999", "minus test 2");
+        minusTest("-1000000", "-1", "-999999", "minus test 2");
 
         //RANDOM tests
         Random rnd = new Random();
