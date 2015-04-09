@@ -145,6 +145,10 @@ public class BigIntTests
     {
         minusTest("1000000", "1", "999999", "minus test 1");
         minusTest("-1000000", "-1", "-999999", "minus test 2");
+        minusTest("10", "5", "5", "minus test 3");
+        minusTest("104", "104", "0", "minus test 4");
+        minusTest("104", "0", "104", "minus test 5");
+
 
         //RANDOM tests
         Random rnd = new Random();
@@ -163,6 +167,21 @@ public class BigIntTests
 
     private static void divideTests()
     {
+        devideTest("100", "25", "4", "divide test 1");
+        devideTest("100", "1", "100", "divide test 2");
+        devideTest("0", "4654641", "0", "divide test 3");
+        devideTest("55", "10", "5", "divide test 4");
+        devideTest("-88", "16", "-5", "divide test 5");
+        devideTest("1545454543434343434334344343435454", "5554554546464566664645645645666", "278", "divide test 6");
+        devideTest("1", "146446", "0", "divide test 7");
+        devideTest("17788", "17788", "1", "divide test 8");
+        devideTest("17788", "17789", "0", "divide test 9");
+        devideTest("17788", "-17788", "-1", "divide test 10");
+        devideTest("-17788", "17788", "-1", "divide test 11");
+        devideTest("6", "3", "2", "divide test 12");
+        devideTest("-6", "-3", "2", "divide test 13");
+        devideTest("7", "6", "1", "divide test 14");
+        devideTest("-1222222222", "-100000", "12222", "divide test 15");
 
     }
 

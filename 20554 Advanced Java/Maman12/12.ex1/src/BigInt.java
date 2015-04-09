@@ -75,6 +75,7 @@ public class BigInt implements Comparable<BigInt>
     {
         String result = "";
 
+        //Special case when the bigger number is negative
         BigInt bigger, smaller;
         int compareResult = this.absolute().compareTo(otherNum.absolute());
 
@@ -165,7 +166,46 @@ public class BigInt implements Comparable<BigInt>
 
     public BigInt divide(BigInt otherNum)
     {
-        return null;
+        if (otherNum.equals(new BigInt("0")))
+        {
+            throw new ArithmeticException("Cannot divide by zero!");
+        }
+
+        BigInt result = new BigInt("0");
+        BigInt temp = new BigInt("0");
+        BigInt thisAbsolute = this.absolute();
+        BigInt otherAbsolute = otherNum.absolute();
+
+        while (temp.compareTo(thisAbsolute) == -1)
+        {
+            temp = temp.plus(otherAbsolute);
+            result = result.plus(new BigInt("1"));
+        }
+
+        if (!temp.equals(thisAbsolute))
+        {
+            result = result.minus(new BigInt("1"));
+        }
+
+        int negativeCount = 0;
+        if (this.isNegative)
+        {
+            negativeCount++;
+        }
+        if (otherNum.isNegative)
+        {
+            negativeCount++;
+        }
+        if (negativeCount == 1)
+        {
+            result.isNegative = true;
+        }
+        else
+        {
+            result.isNegative = false;
+        }
+
+        return result;
     }
 
     public BigInt absolute()
