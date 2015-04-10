@@ -162,7 +162,21 @@ public class BigIntTests
 
     private static void multiplyTests()
     {
-
+        multiplyTest("2", "2", "4", "multiply test 1");
+        multiplyTest("234", "41", "9594", "multiply test 2");
+        multiplyTest("55", "0", "0", "multiply test 3");
+        multiplyTest("2323234569938811391023232345699388113910", "10000", "23232345699388113910232323456993881139100000", "multiply test 4");
+        multiplyTest("55", "0", "0", "multiply test 5");
+        multiplyTest("54544", "-1", "-54544", "multiply test 6");
+        multiplyTest("999999", "-99", "-98999901", "multiply test 7");
+        multiplyTest("-25", "-25", "625", "multiply test 8");
+        multiplyTest("-99", "22", "-2178", "multiply test 9");
+        multiplyTest("22", "-99", "-2178", "multiply test 10");
+        multiplyTest("2", "-1111111", "-2222222", "multiply test 11");
+        multiplyTest("22", "-13313", "-292886", "multiply test 12");
+        multiplyTest("-0", "233203", "0", "multiply test 13");
+        multiplyTest("2332323232323232231122299", "1", "2332323232323232231122299", "multiply test 14");
+        multiplyTest("123456", "123456", "15241383936", "multiply test 15");
     }
 
     private static void divideTests()

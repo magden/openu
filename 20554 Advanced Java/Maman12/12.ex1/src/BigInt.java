@@ -1,6 +1,7 @@
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -161,7 +162,53 @@ public class BigInt implements Comparable<BigInt>
 
     public BigInt multiply(BigInt otherNum)
     {
-        return null;
+        BigInt result = new BigInt("0");
+
+        ListIterator<Integer> thisIt = this.digitArray.listIterator(this.digitArray.size());
+        int thisDigitCount = 0;
+
+        while (thisIt.hasPrevious())
+        {
+            int thisDigit = thisIt.previous();
+            int extra = 0;
+            int otherDigitCount = 0;
+            ListIterator<Integer> otherIt = otherNum.digitArray.listIterator(otherNum.digitArray.size());
+            while (otherIt.hasPrevious() || extra > 0)
+            {
+                int otherDigit = otherIt.hasPrevious() ? otherIt.previous() : 0;
+                int resultDigit = thisDigit * otherDigit + extra;
+                if (resultDigit > 10)
+                {
+                    extra = resultDigit / 10;
+                    resultDigit = resultDigit % 10;
+                }
+                else
+                {
+                    extra = 0;
+                }
+                String numToAdd = "" + resultDigit;
+                for (int i = 0; i < thisDigitCount + otherDigitCount; i++)
+                {
+                    numToAdd += "0";
+                }
+                result = result.plus(new BigInt(numToAdd));
+                otherDigitCount++;
+            }
+            thisDigitCount++;
+        }
+
+        int negativeCount = 0;
+        if (this.isNegative)
+        {
+            negativeCount++;
+        }
+        if (otherNum.isNegative)
+        {
+            negativeCount++;
+        }
+
+        result.isNegative = (negativeCount == 1);
+        return result;
     }
 
     public BigInt divide(BigInt otherNum)
