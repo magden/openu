@@ -1,8 +1,4 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -69,7 +65,7 @@ public class BigInt implements Comparable<BigInt>
 
     private boolean isValidNumber(String str)
     {
-        return str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
+        return str != null && str.matches("^\\s*[-+]?\\s*[0-9]+\\s*$");
     }
 
     public BigInt plus(BigInt otherNum)
