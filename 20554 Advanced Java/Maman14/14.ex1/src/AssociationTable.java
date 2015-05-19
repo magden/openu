@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * Created by Stas on 19/05/2015 23:18.
@@ -120,8 +118,14 @@ public class AssociationTable<K extends Comparable<K>, V>
         return list.size();
     }
 
-    public Iterator<K> keyInterator()
+    public Iterator<K> keyIterator()
     {
-        return null;
+        ArrayList<K> keyList = new ArrayList<K>(this.size());
+        for (KeyValuePair<K, V> pair : this.list)
+        {
+            keyList.add(pair.key);
+        }
+
+        return keyList.listIterator();
     }
 }
