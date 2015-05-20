@@ -32,6 +32,14 @@ public class MyLine extends MyShape
         return false;
     }
 
+    @Override
+    public boolean contains(int x, int y)
+    {
+        double m1 = (double) (x - this.x1) / (double) (y - this.y1);
+        double m2 = (double) (this.x2 - x) / (double) (this.y2 - y);
+        return m1 == m2;
+    }
+
     public int getStartX()
     {
         return this.x1;

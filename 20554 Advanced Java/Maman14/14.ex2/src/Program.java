@@ -8,6 +8,12 @@ public class Program
 {
     public static void main(String args[])
     {
-        System.out.print("Maman 14 ex2");
+        JFrame window = new JFrame();
+        window.setTitle("Shapes");
+        window.setSize(800, 500);
+        window.setLocationRelativeTo(null);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        new ViewController(window);
+        window.setVisible(true);
     }
 }
