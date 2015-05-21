@@ -34,10 +34,18 @@ public class View extends JPanel
     public void initUI()
     {
         canvas = new JPanel();
-        canvas.setBackground(Color.PINK);
         setLayout(new BorderLayout());
         add(canvas, BorderLayout.CENTER);
         add(createShapePanel(), BorderLayout.EAST);
+        changeLabelsForShape();
+        addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent)
+            {
+                vc.screenClick(mouseEvent.getX(), mouseEvent.getY());
+            }
+        });
     }
 
     public JPanel createShapePanel()
@@ -46,7 +54,7 @@ public class View extends JPanel
         shapePanel.setLayout(new BoxLayout(shapePanel, BoxLayout.Y_AXIS));
 
         lblTitle = new JLabel("Add new Shape:");
-        comboShape = new JComboBox(new String[]{"Line", "Oval", "Rectangle"});
+        comboShape = new JComboBox(shapeChooser());
         comboShape.addItemListener(new ItemListener()
         {
             @Override
@@ -64,12 +72,12 @@ public class View extends JPanel
         shapePanel.add(lblColor);
         shapePanel.add(comboColor);
 
-        lblStartX = new JLabel("Start X:");
+        lblStartX = new JLabel("Origin X:");
         txtStartX = new JTextField();
         shapePanel.add(lblStartX);
         shapePanel.add(txtStartX);
 
-        lblStartY = new JLabel("Start Y:");
+        lblStartY = new JLabel("Origin Y:");
         txtStartY = new JTextField();
         shapePanel.add(lblStartY);
         shapePanel.add(txtStartY);
@@ -100,25 +108,44 @@ public class View extends JPanel
 
     public void changeLabelsForShape()
     {
-
+        String selectedShape = comboShape.getSelectedItem().toString().toLowerCase();
+        if (selectedShape.equals("line"))
+        {
+            lblEndX.setText("End X:");
+            lblEndY.setText("End Y:");
+        }
+        else
+        {
+            lblEndX.setText("Width:");
+            lblEndY.setText("Height:");
+        }
     }
 
     public void btnAddShapeClick()
     {
+        int startX, startY, endX, endY;
+        try
+        {
+            startX = Integer.parseInt(txtStartX.getText());
+            startY = Integer.parseInt(txtStartY.getText());
+            endX = Integer.parseInt(txtEndX.getText());
+            endY = Integer.parseInt(txtEndY.getText());
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(this, "Please specify valid numbers for shape dimensions.");
+            return;
+        }
         String selectedShape = (String) comboShape.getSelectedItem();
-        int startX = Integer.parseInt(txtStartX.getText());
-        int startY = Integer.parseInt(txtStartY.getText());
-        int endX = Integer.parseInt(txtEndX.getText());
-        int endY = Integer.parseInt(txtEndY.getText());
-        if (selectedShape == "Line")
+        if (selectedShape.equals("Line"))
         {
             vc.addLine(new MyLine(startX, startY, endX, endY, getColorFromCombo()));
         }
-        else if (selectedShape == "Oval")
+        else if (selectedShape.equals("Oval"))
         {
             vc.addOval(new MyOval(startX, startY, endX, endY, getColorFromCombo(), true));
         }
-        else if (selectedShape == "Rectangle")
+        else if (selectedShape.equals("Rectangle"))
         {
             vc.addRect(new MyRectangle(startX, startY, endX, endY, getColorFromCombo(), true));
         }
@@ -127,23 +154,48 @@ public class View extends JPanel
     public Color getColorFromCombo()
     {
         String strColor = comboColor.getSelectedItem().toString().toLowerCase();
-        if (strColor == "red")
+        if (strColor.equals("red"))
         {
             return Color.RED;
         }
-        if (strColor == "blue")
+        if (strColor.equals("blue"))
         {
             return Color.BLUE;
         }
-        if (strColor == "green")
+        if (strColor.equals("green"))
         {
             return Color.GREEN;
         }
-        if (strColor == "yellow")
+        if (strColor.equals("yellow"))
         {
             return Color.YELLOW;
         }
 
         return Color.BLACK;
+    }
+
+    public String[] shapeChooser()
+    {
+        int answer = JOptionPane.showOptionDialog(null,
+                "What shapes would you like to draw?",
+                "",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new String[]{"All shapes", "Lines only", "Bounded shapes only"},
+                null);
+
+        switch (answer)
+        {
+            case 0:
+                return new String[]{"Line", "Oval", "Rectangle"};
+            case 1:
+                return new String[]{"Line"};
+            case 2:
+                return new String[]{"Oval", "Rectangle"};
+            case JOptionPane.CLOSED_OPTION:
+                System.exit(0);
+        }
+        return new String[]{};
     }
 }
