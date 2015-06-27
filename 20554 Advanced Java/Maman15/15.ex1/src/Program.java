@@ -6,8 +6,27 @@ public class Program
 {
     public static void main(String [] args)
     {
-        ArrayRepository summer = new ArrayRepository(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
-        Thread t1 = new Thread(new NumberSumWorker(summer));
-        t1.run();
+        final int N = 100;
+        final int M = 10;
+        Integer [] numbers = new Integer[N];
+        for (int i = 0; i < N; i++)
+        {
+            numbers[i] = i + 1;
+        }
+
+
+        ArrayRepository summer = new ArrayRepository(numbers, M);
+
+        Thread [] threads = new Thread[M];
+
+        for (int i = 0; i < M; i++)
+        {
+            threads[i] = new Thread(new NumberSumWorker(summer));
+        }
+
+        for (Thread t : threads)
+        {
+            t.start();
+        }
     }
 }

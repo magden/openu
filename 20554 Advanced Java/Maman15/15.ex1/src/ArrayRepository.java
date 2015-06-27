@@ -7,21 +7,50 @@ import java.util.Arrays;
 
 public class ArrayRepository
 {
-    List<Integer> intList;
-    public ArrayRepository(Integer[] array)
+    private List<Integer> intList;
+    private int waitingThreads;
+    private int maxThreads;
+    private boolean isFinished;
+
+    public ArrayRepository(Integer[] array, int maxThreads)
     {
+        this.maxThreads = maxThreads;
         intList = new ArrayList<Integer>(Arrays.asList(array));
+        waitingThreads = 0;
+        isFinished = false;
     }
 
-    public void insert(Integer item)
+    public synchronized void insert(Integer item)
     {
-        intList.add(item);
+        intList.add(0, item);
+        notifyAll();
     }
 
-    public Integer[] popTwoItems()
+    public synchronized Integer[] popTwoItems()
     {
-        if (intList.size() < 2)
+        while (intList.size() < 2)
         {
+            if (waitingThreads < maxThreads - 1)
+            {
+                waitingThreads ++;
+                //wait for a new number
+                try {  wait(); }
+                catch (InterruptedException e)  { }
+                waitingThreads--;
+            }
+            else {
+                //all threads are already waiting -> this is the last thread
+                isFinished = true;
+                notifyAll();
+                return null;
+            }
+
+            if (isFinished) {
+                return null;
+            }
+        }
+
+        if (isFinished) {
             return null;
         }
 
@@ -30,5 +59,10 @@ public class ArrayRepository
         poped[1] = intList.remove(0);
 
         return poped;
+    }
+
+    public Integer firstItem()
+    {
+        return intList.get(0);
     }
 }
