@@ -11,9 +11,11 @@ public class GameOfLife
     private int nextGenCounter;
     private int totalCells;
     private final int GEN_DELAY = 1000;
+    private GridPanel grid;
 
-    public GameOfLife(int height, int width)
+    public GameOfLife(int height, int width, GridPanel grid)
     {
+        this.grid = grid;
         nextGenCounter = 0;
         currentGen = new boolean[height][width];
         nextGen = new boolean[height][width];
@@ -83,6 +85,9 @@ public class GameOfLife
         {
 
         }
+
+        //redraw grid
+        this.render(grid);
     }
 
     public synchronized int getLivingNeighbors(int row, int col)
@@ -157,5 +162,16 @@ public class GameOfLife
         }
 
         return output;
+    }
+
+    public void render(GridPanel grid)
+    {
+        for (int i = 0; i < currentGen.length; i++)
+        {
+            for (int j = 0; j < currentGen[i].length; j++)
+            {
+                grid.setState(i, j, currentGen[i][j]);
+            }
+        }
     }
 }
