@@ -24,6 +24,6 @@ public class NumberSumWorker implements Runnable
             twoItems = repo.popTwoItems();
         }
 
-        System.out.println("finished. "+repo.firstItem());
+        System.out.println("finished. ");
     }
 }

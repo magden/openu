@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.Arrays;
 
@@ -9,11 +10,13 @@ public class ArrayRepository
 {
     private List<Integer> intList;
     private int waitingThreads;
+    private JTextField txtResult;
     private int maxThreads;
     private boolean isFinished;
 
-    public ArrayRepository(Integer[] array, int maxThreads)
+    public ArrayRepository(Integer[] array, JTextField txtResult, int maxThreads)
     {
+        this.txtResult = txtResult;
         this.maxThreads = maxThreads;
         intList = new ArrayList<Integer>(Arrays.asList(array));
         waitingThreads = 0;
@@ -28,6 +31,7 @@ public class ArrayRepository
 
     public synchronized Integer[] popTwoItems()
     {
+        //check if there are 2 items
         while (intList.size() < 2)
         {
             if (waitingThreads < maxThreads - 1)
@@ -39,8 +43,9 @@ public class ArrayRepository
                 waitingThreads--;
             }
             else {
-                //all threads are already waiting -> this is the last thread
+                //all threads are already waiting -> this is the last thread and we finished running
                 isFinished = true;
+                txtResult.setText(intList.get(0).toString());
                 notifyAll();
                 return null;
             }
@@ -59,10 +64,5 @@ public class ArrayRepository
         poped[1] = intList.remove(0);
 
         return poped;
-    }
-
-    public Integer firstItem()
-    {
-        return intList.get(0);
     }
 }
