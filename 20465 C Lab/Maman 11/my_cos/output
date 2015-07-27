@@ -1,0 +1,41 @@
+Enter value for cos:
+my_cos(0.000000) = 1.000000000
+cos(0.000000) = 1.000000000
+diff = -0.000000000
+
+Enter another value for cos:
+my_cos(1.570796) = -0.000000468
+cos(1.570796) = -0.000000003
+diff = 0.000000465
+
+Enter another value for cos:
+my_cos(3.141593) = -0.999999865
+cos(3.141593) = -1.000000000
+diff = 0.000000135
+
+Enter another value for cos:
+my_cos(4.712389) = 0.000000553
+cos(4.712389) = -0.000000000
+diff = 0.000000554
+
+Enter another value for cos:
+my_cos(6.283185) = 1.000000000
+cos(6.283185) = 1.000000000
+diff = 0.000000000
+
+Enter another value for cos:
+my_cos(325.210000) = 0.055133100
+cos(325.210000) = 0.055132385
+diff = 0.000000715
+
+Enter another value for cos:
+my_cos(9545.445000) = 0.280464395
+cos(9545.445000) = 0.280464438
+diff = 0.000000043
+
+Enter another value for cos:
+my_cos(-44444.440000) = -0.946452417
+cos(-44444.440000) = -0.946453223
+diff = 0.000000807
+
+Enter another value for cos:
