@@ -11,10 +11,14 @@
       <module fileurl="file://$PROJECT_DIR$/Maman15/15.ex1/15.ex1.iml" filepath="$PROJECT_DIR$/Maman15/15.ex1/15.ex1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman15/15.ex2/15.ex2.iml" filepath="$PROJECT_DIR$/Maman15/15.ex2/15.ex2.iml" />
       <module fileurl="file://$PROJECT_DIR$/20554 Advanced Java.iml" filepath="$PROJECT_DIR$/20554 Advanced Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Networking/Client/Client.iml" filepath="$PROJECT_DIR$/Networking/Client/Client.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman11/Maman11.iml" filepath="$PROJECT_DIR$/Maman11/Maman11.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman12/Maman12.iml" filepath="$PROJECT_DIR$/Maman12/Maman12.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman14/Maman14.iml" filepath="$PROJECT_DIR$/Maman14/Maman14.iml" />
       <module fileurl="file://$PROJECT_DIR$/Maman15/Maman15.iml" filepath="$PROJECT_DIR$/Maman15/Maman15.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Networking/Networking.iml" filepath="$PROJECT_DIR$/Networking/Networking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Playground/Playground.iml" filepath="$PROJECT_DIR$/Playground/Playground.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Networking/Server/Server.iml" filepath="$PROJECT_DIR$/Networking/Server/Server.iml" />
     </modules>
   </component>
 </project>
